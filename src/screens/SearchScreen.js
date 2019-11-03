@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useResults from '../hooks/useResults';
+import ResultsList from '../components/ResultsList';
 
 const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,19 +12,15 @@ const SearchScreen = () => {
     <View>
       <SearchBar
         searchTerm={searchTerm}
-        onChangeTerm={newTerm => {
-          setErrorMessage('');
-          setSearchTerm(newTerm);
-        }}
+        onChangeTerm={setSearchTerm}
         onSubmitTerm={() => getData(searchTerm)}
       />
-      {errorMessage.length === 0 ? (
-        <Text style={{ fontSize: 20, margin: 20 }}>
-          We have found {yelpResults.length} results
-        </Text>
-      ) : (
+      {errorMessage.length !== 0 ? (
         <Text style={styles.erroMessageStyle}>{errorMessage}</Text>
-      )}
+      ) : null}
+      <ResultsList data={yelpResults['$']} title='Cost Effective' />
+      <ResultsList data={yelpResults['$$']} title='Bit Pricier' />
+      <ResultsList data={yelpResults['$$$']} title='Big Spender' />
     </View>
   );
 };

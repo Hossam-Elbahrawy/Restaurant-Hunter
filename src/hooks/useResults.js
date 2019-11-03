@@ -2,12 +2,22 @@ import { useEffect, useState } from 'react';
 import yelp from '../api/yelp';
 
 export default () => {
-  const [yelpResults, setYelpResults] = useState([]);
+  const [yelpResults, setYelpResults] = useState({ $: [], $$: [], $$$: [] });
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    getData('');
+    getData('pasta');
   }, []);
+
+  const filterReasultsByPrice = yelpResults => {
+    const groupedYelpResults = { $: [], $$: [], $$$: [] };
+    yelpResults.forEach(result => {
+      if (result.price) {
+        groupedYelpResults[result.price].push(result);
+      }
+    });
+    setYelpResults(groupedYelpResults);
+  };
 
   const getData = async searchTerm => {
     try {
@@ -19,11 +29,12 @@ export default () => {
         }
       });
       if (response) {
-        setYelpResults(response.data.businesses);
+        filterReasultsByPrice(response.data.businesses);
+        // setYelpResults(response.data.businesses);
       }
     } catch (err) {
       setErrorMessage('Something went wrong, try again later.');
-      console.log('error', err);
+      console.log('error', err.response);
     }
   };
   return [getData, yelpResults, errorMessage];
