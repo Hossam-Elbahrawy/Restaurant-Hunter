@@ -37,5 +37,5 @@ export default () => {
       console.log('error', err.response);
     }
   };
-  return [getData, yelpResults, errorMessage];
+  return [getData, yelpResults, errorMessage, setErrorMessage];
 };

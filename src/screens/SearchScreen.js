@@ -6,23 +6,27 @@ import ResultsList from '../components/ResultsList';
 
 const SearchScreen = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [getData, yelpResults, errorMessage] = useResults();
+  const [getData, yelpResults, errorMessage, setErrorMessage] = useResults();
 
   return (
     <>
       <SearchBar
         searchTerm={searchTerm}
-        onChangeTerm={setSearchTerm}
+        onChangeTerm={newTerm => {
+          setErrorMessage('');
+          setSearchTerm(newTerm);
+        }}
         onSubmitTerm={() => getData(searchTerm)}
       />
       {errorMessage.length !== 0 ? (
         <Text style={styles.erroMessageStyle}>{errorMessage}</Text>
-      ) : null}
-      <ScrollView>
-        <ResultsList data={yelpResults['$']} title='Cost Effective' />
-        <ResultsList data={yelpResults['$$']} title='Bit Pricier' />
-        <ResultsList data={yelpResults['$$$']} title='Big Spender' />
-      </ScrollView>
+      ) : (
+        <ScrollView>
+          <ResultsList data={yelpResults['$']} title='Cost Effective' />
+          <ResultsList data={yelpResults['$$']} title='Bit Pricier' />
+          <ResultsList data={yelpResults['$$$']} title='Big Spender' />
+        </ScrollView>
+      )}
     </>
   );
 };
