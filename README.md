@@ -29,7 +29,7 @@ Getting up and running is as easy as 1, 2, 3.
 
 ## Screenshots
 
-![App Screenshot](./restaurantHunter.png)
+<img src="./restaurantHunter.png" width='360' height='750'></img>
 
 ## Support
 
