@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useResults from '../hooks/useResults';
 import ResultsList from '../components/ResultsList';
@@ -9,7 +9,7 @@ const SearchScreen = () => {
   const [getData, yelpResults, errorMessage] = useResults();
 
   return (
-    <View>
+    <>
       <SearchBar
         searchTerm={searchTerm}
         onChangeTerm={setSearchTerm}
@@ -18,10 +18,12 @@ const SearchScreen = () => {
       {errorMessage.length !== 0 ? (
         <Text style={styles.erroMessageStyle}>{errorMessage}</Text>
       ) : null}
-      <ResultsList data={yelpResults['$']} title='Cost Effective' />
-      <ResultsList data={yelpResults['$$']} title='Bit Pricier' />
-      <ResultsList data={yelpResults['$$$']} title='Big Spender' />
-    </View>
+      <ScrollView>
+        <ResultsList data={yelpResults['$']} title='Cost Effective' />
+        <ResultsList data={yelpResults['$$']} title='Bit Pricier' />
+        <ResultsList data={yelpResults['$$$']} title='Big Spender' />
+      </ScrollView>
+    </>
   );
 };
 
